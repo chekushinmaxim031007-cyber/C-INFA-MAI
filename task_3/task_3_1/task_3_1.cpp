@@ -1,23 +1,41 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <limits>
 
 using namespace std;
 
 void printStudentInfo() {
     cout << "Student: Чекушин Максим Артемович" << endl;
     cout << "Group: М10-137БВ-25" << endl;
-    cout << "Task: 1" << endl;
-    cout << "------------------------" << endl;
+    cout << "Task_3_1" << endl;
+    cout << "---------------------" << endl;
 }
 
-void createBooksFile() {
+void waitForEnter() {
+    cout << "\nPress Enter to exit..." << endl;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get();
+}
+
+int main() {
+    // Set console to UTF-8 for proper character display
+    #ifdef _WIN32
+        system("chcp 65001 > nul");
+    #endif
+    
+    printStudentInfo();
+    
+    // Create or overwrite books.txt file
     ofstream file("books.txt");
+    
     if (!file.is_open()) {
-        cout << "Error creating books.txt file!" << endl;
-        return;
+        cout << "Error creating file!" << endl;
+        waitForEnter();
+        return 1;
     }
     
+    // Write 5 book records
     file << "1. Name: To Kill a Mockingbird" << endl;
     file << "   Author: Harper Lee" << endl;
     file << "   Year: 1960" << endl;
@@ -44,11 +62,8 @@ void createBooksFile() {
     file << "   ----------" << endl;
     
     file.close();
-    cout << "File books.txt created successfully with 5 book entries!" << endl;
-}
-
-int main() {
-    printStudentInfo();
-    createBooksFile();
+    cout << "File 'books.txt' created successfully with 5 book records!" << endl;
+    
+    waitForEnter();
     return 0;
 }

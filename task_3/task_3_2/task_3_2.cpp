@@ -1,40 +1,49 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <locale>
+#include <limits>
 
 using namespace std;
 
 void printStudentInfo() {
-    setlocale(LC_ALL, "ru_RU.UTF-8");
-    cout << "Студент: Чекушин Максим Артемович" << endl;
-    cout << "Группа: М10-137БВ-25" << endl;
-    cout << "Задание: task 2" << endl;
-    cout << "------------------------" << endl;
+    cout << "Student: Чекушин Максим Артемович" << endl;
+    cout << "Group: М10-137БВ-25" << endl;
+    cout << "Task_3_2" << endl;
+    cout << "---------------------" << endl;
 }
 
-void readAndDisplayBooks() {
-    ifstream file("books.txt");
-    if (!file.is_open()) {
-        cout << "Ошибка открытия файла books.txt!" << endl;
-        cout << "Убедитесь, что файл books.txt существует в текущей директории." << endl;
-        return;
-    }
-    
-    string line;
-    cout << "Содержимое файла books.txt:" << endl;
-    cout << "===========================" << endl;
-    while (getline(file, line)) {
-        cout << line << endl;
-    }
-    file.close();
+void waitForEnter() {
+    cout << "\nPress Enter to exit..." << endl;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get();
 }
 
 int main() {
-    printStudentInfo();
-    readAndDisplayBooks();
+    // Set console to UTF-8 for proper character display
+    #ifdef _WIN32
+        system("chcp 65001 > nul");
+    #endif
     
-    cout << "Для продолжения нажмите любую клавишу . . .";
-    cin.get();
+    printStudentInfo();
+    
+    ifstream file("books.txt");
+    
+    if (!file.is_open()) {
+        cout << "Error opening file 'books.txt'!" << endl;
+        waitForEnter();
+        return 1;
+    }
+    
+    string line;
+    cout << "Contents of books.txt:" << endl;
+    cout << "======================" << endl;
+    
+    while (getline(file, line)) {
+        cout << line << endl;
+    }
+    
+    file.close();
+    
+    waitForEnter();
     return 0;
 }
