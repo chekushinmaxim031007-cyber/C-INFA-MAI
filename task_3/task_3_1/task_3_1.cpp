@@ -5,9 +5,9 @@
 using namespace std;
 
 void printStudentInfo() {
-    cout << "Student: John Doe" << endl;
-    cout << "Group: CS-21" << endl;
-    cout << "Task: 3.1" << endl;
+    cout << "Student: Чекушин Максим Артемович" << endl;
+    cout << "Group: М10-137БВ-25" << endl;
+    cout << "Task: 1" << endl;
     cout << "------------------------" << endl;
 }
 
