@@ -1,43 +1,51 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <limits>
 
 using namespace std;
 
 void printStudentInfo() {
-    setlocale(LC_ALL, "Russian");
-    std::cout << "Student: Чекушин Максим Артемович" << std::endl;
-    std::cout << "Group: М10-137БВ-25" << std::endl;
-    std::cout << "Task: task_1" << std::endl;
+    cout << "Student: Chekushin Maxim Artemovich " << endl;
+    cout << "Group: M10-137BV-25" << endl;
+    cout << "Task: 3" << endl;
+    cout << endl;
 }
 
+
 template<typename T>
-void printVector(const vector<T>& vec) {
-    cout << "My vector has " << vec.size() << " of these elements:" << endl;
-    for (size_t i = 0; i < vec.size(); ++i) {
-        cout << "[" << i << "] -> " << vec[i] << endl;
+ostream& operator<<(ostream& os, const vector<T>& vec) {
+    os << "My vector has " << vec.size() << " of these elements: ";
+    for (size_t i = 0; i < vec.size(); i++) {
+        os << "[" << i << "] -> " << vec[i];
+        if (i < vec.size() - 1) os << ", ";
     }
+    return os;
 }
 
 int main() {
     printStudentInfo();
-
-    vector<int> intVec = { 1, 2, 3, 4, 5 };
-    vector<double> doubleVec = { 1.1, 2.2, 3.3 };
-    vector<string> stringVec = { "Mazda", "Toyota", "Nissan", "Subaru" };
-   
+    
+    vector<int> intVec = {1, 2, 3, 4, 5};
+    vector<string> strVec = {"apple", "banana", "cherry"};
+    vector<double> doubleVec = {1.1, 2.2, 3.3, 4.4};
+    vector<char> charVec = {'A', 'B', 'C', 'D'};
+    
     cout << "Integer vector:" << endl;
-    printVector(intVec);
-    cout << endl;
-
-    cout << "Double vector:" << endl;
-    printVector(doubleVec);
-    cout << endl;
-
-    cout << "String vector:" << endl;
-    printVector(stringVec);
-
-    system("pause");
-
+    cout << intVec << endl;
+    
+    cout << "\nString vector:" << endl;
+    cout << strVec << endl;
+    
+    cout << "\nDouble vector:" << endl;
+    cout << doubleVec << endl;
+    
+    cout << "\nChar vector:" << endl;
+    cout << charVec << endl;
+    
+    cout << "\nPress Enter to exit...";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get();
+    
     return 0;
 }

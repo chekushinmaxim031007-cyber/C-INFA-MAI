@@ -2,54 +2,80 @@
 #include <map>
 #include <vector>
 #include <string>
-#include <random>
+#include <windows.h>
 
 using namespace std;
 
-void printStudentInfo() {
-    setlocale(LC_ALL, "Russian");
-    std::cout << "Student: Чекушин Максим Артемович" << std::endl;
-    std::cout << "Group: М10-137БВ-25" << std::endl;
-    std::cout << "Task: task_1" << std::endl;
+void printStudentInfo()
+{
+    SetConsoleOutputCP(CP_UTF8);
+    cout << "Student: Chekushin Maxim Artemovich" << endl;
+    cout << "Group: M10-137BV-25" << endl;
+    cout << "Task: task_5" << endl;
+    cout << endl;
 }
 
-int main() {
+template<typename T>
+ostream& operator<<(ostream& os, const vector<T>& vec)
+{
+    for (size_t i = 0; i < vec.size(); i++)
+    {
+        os << vec[i];
+        if (i < vec.size() - 1)
+        {
+            os << ", ";
+        }
+    }
+    return os;
+}
+
+template<typename K, typename V>
+ostream& operator<<(ostream& os, const map<K, V>& myMap)
+{
+    os << "My map has " << myMap.size() << " of keys and has these pairs:" << endl;
+    for (const auto& pair : myMap)
+    {
+        os << "[" << pair.first << "] -> {" << pair.second << "}" << endl;
+    }
+    return os;
+}
+
+int main()
+{
     printStudentInfo();
 
-    map<string, vector<int>> students;
-    int studentCount = 10;
-    int gradesCount = 5;
+    map<string, int> simpleMap =
+    {
+        {"apple", 10},
+        {"banana", 20},
+        {"cherry", 30}
+    };
 
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<> dis(2, 5);
+    cout << simpleMap;
 
-    cout << "Enter " << studentCount << " student names:" << endl;
+    map<string, vector<int>> mapWithVector =
+    {
+        {"scores1", {85, 90, 78}},
+        {"scores2", {92, 88, 95}},
+        {"scores3", {76, 85, 80}}
+    };
 
-    for (int i = 0; i < studentCount; ++i) {
-        string name;
-        cout << "Student " << i + 1 << ": ";
-        getline(cin, name);
+    cout << endl;
+    cout << mapWithVector;
 
-        vector<int> grades;
-        for (int j = 0; j < gradesCount; ++j) {
-            grades.push_back(dis(gen));
-        }
+    map<vector<int>, string> mapWithVectorKey =
+    {
+        {{1, 2, 3}, "first"},
+        {{4, 5}, "second"},
+        {{6, 7, 8, 9}, "third"}
+    };
 
-        students[name] = grades;
-    }
+    cout << endl;
+    cout << mapWithVectorKey;
 
-    cout << "\nStudent list with grades:" << endl;
-    cout << "=========================" << endl;
-
-    for (const auto& student : students) {
-        cout << student.first << ": ";
-        for (int grade : student.second) {
-            cout << grade << " ";
-        }
-        cout << endl;
-    }
-    system("pause");
+    cout << "\nPress Enter to exit...";
+    cin.ignore();
+    cin.get();
 
     return 0;
 }
